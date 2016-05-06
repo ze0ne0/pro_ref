@@ -169,6 +169,8 @@ class Core
       UInt64 m_spin_loops;
       UInt64 m_spin_instructions;
       SubsecondTime m_spin_elapsed_time;
+      SubsecondTime t_initial;
+      SubsecondTime t_final;
 
    protected:
       // Optimized version of countInstruction has direct access to m_instructions and m_instructions_callback

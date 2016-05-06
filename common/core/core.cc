@@ -109,6 +109,12 @@ Core::~Core()
 {
 
 	PRAK_LOG("m_instruction:%lld core:%d \n ",m_count,m_core_id);
+	if(m_core_id==0)
+	{
+		t_final=m_shmem_perf_model->getElapsedTime(ShmemPerfModel::_USER_THREAD);
+		PRAK_LOG("T_START:%lld T_END:%lld T_TOTAL:%lld",t_initial.getNS(),t_final.getNS(),t_final.getNS()-t_initial.getNS());
+	}
+
    if (m_cheetah_manager)
       delete m_cheetah_manager;
    delete m_topology_info;
@@ -231,6 +237,10 @@ MemoryResult
 Core::readInstructionMemory(IntPtr address, UInt32 instruction_size)
 {
 	m_count+=1;
+	if(m_count==1 && m_core_id==0 )
+	{
+		t_initial=m_shmem_perf_model->getElapsedTime(ShmemPerfModel::_USER_THREAD);
+	}
    LOG_PRINT("Instruction: Address(0x%x), Size(%u), Start READ",
            address, instruction_size);
 
